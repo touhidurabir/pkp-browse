@@ -14,6 +14,7 @@
 namespace APP\plugins\blocks\browse;
 
 use APP\facades\Repo;
+use PKP\category\Category;
 use PKP\context\Context;
 use PKP\plugins\BlockPlugin;
 
@@ -79,7 +80,7 @@ class BrowseBlockPlugin extends BlockPlugin
     /**
      * Format category data.
      */
-    private function formatCategoryData(\Category $category): array
+    private function formatCategoryData(Category $category): array
     {
         // Avoid processing the same category multiple times
         if (in_array($category->getId(), $this->processedCategoryIds)) {
@@ -113,8 +114,4 @@ class BrowseBlockPlugin extends BlockPlugin
 
         return $children->map(fn($category) => $this->formatCategoryData($category))->all();
     }
-}
-
-if (!PKP_STRICT_MODE) {
-    class_alias('\APP\plugins\blocks\browse\BrowseBlockPlugin', '\BrowseBlockPlugin');
 }
